@@ -401,9 +401,12 @@
     }
     
     CGFloat topLayoutGuideLength = [self topLayoutGuideLengthCalculation];
-
-    CGSize transformedSize = CGSizeApplyAffineTransform(viewController.view.frame.size, viewController.view.transform);
-    CGRect displayFrame = CGRectMake(0, 0, fabs(transformedSize.width),
+    CGRect safeAreaFrame = viewController.view.safeAreaLayoutGuide.layoutFrame;
+    CGSize transformedSize = CGSizeApplyAffineTransform(safeAreaFrame.size,
+                                                        viewController.view.transform);
+    CGRect displayFrame = CGRectMake(safeAreaFrame.origin.x,
+                                     safeAreaFrame.origin.y,
+                                     fabs(transformedSize.width),
                                      kCSNotificationViewHeight + topLayoutGuideLength);
     
     return displayFrame;
